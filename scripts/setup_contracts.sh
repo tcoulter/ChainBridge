@@ -4,6 +4,7 @@
 
 CONTRACTS_REPO="https://github.com/ChainSafe/chainbridge-solidity"
 CONTRACTS_TAG="v1.0.0"
+LOCAL_REPO_DIR="../chainbridge-solidity"
 CONTRACTS_DIR="./solidity"
 DEST_DIR="./bindings"
 
@@ -22,6 +23,17 @@ case $TARGET in
 
     mkdir $DEST_DIR
     cp -r $CONTRACTS_DIR/build/bindings/go/* $DEST_DIR
+		;;
+  "build-local")
+    pushd $LOCAL_REPO_DIR
+
+    make install-deps
+    make bindings
+
+    popd
+
+    mkdir $DEST_DIR
+    cp -r $LOCAL_REPO_DIR/build/bindings/go/* $DEST_DIR
 		;;
 
 	"cli-only")
